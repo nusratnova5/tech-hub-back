@@ -35,7 +35,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req,res) => {
-    res.send('Running.')
+    res.send('Runningg latest.' + process.env.DB_USER)
 })
 
 app.use('/users', userRoutes);
