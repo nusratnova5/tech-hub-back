@@ -7,6 +7,7 @@ const { verifyToken } = require('../middleware/auth');
 
 // Get all users
 router.get('/', userController.getAllUsers);
+router.get('/dashboard-data', userController.dashboardData);
 
 // Get a user by ID
 router.get('/:id', userController.getUserById);

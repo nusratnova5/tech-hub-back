@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
+const { verifyToken } = require('../middleware/auth');
+router.use(verifyToken);
+
 // Create a new user
 router.post('/', productController.createProduct);
 

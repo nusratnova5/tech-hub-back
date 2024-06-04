@@ -8,7 +8,12 @@ exports.login = async (req, res) => {
   try {
     const user = await db.collection('users').findOne({ email });
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    const response = {
+      acknowledged: true,
+      user,
+      token
+    };
+    res.json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

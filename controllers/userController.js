@@ -45,8 +45,13 @@ const updateUserById = async (req, res) => {
   
       // Get the updated user
       const updatedUserDetails = await db.collection('users').findOne({ _id: userId });
+
+      const response = {
+        acknowledged: true,
+        data: updatedUserDetails
+      };
   
-      res.json(updatedUserDetails);
+      res.json(response);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -64,9 +69,32 @@ const deleteUserById = async (req, res) => {
   }
 };
 
+
+const dashboardData = async (req, res) => {
+  const db = req.app.locals.db;
+  try {
+    // Query to count the number of users
+    const userCount = await db.collection('users').countDocuments();
+    
+    // Query to count the number of products
+    const productCount = await db.collection('products').countDocuments();
+
+    // Construct the response object with the counts
+    const responseData = {
+      userCount,
+      productCount
+    };
+
+    res.json(responseData);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  dashboardData
 };
