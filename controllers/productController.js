@@ -16,10 +16,17 @@ exports.createProduct = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
   const db = req.app.locals.db;
 
-  const { title } = req.query; // Extract the title query parameter
+  const { title,notEmail, email } = req.query; // Extract the title query parameter
   let query = {};
   if (title) {
     query.title = { $regex: title, $options: 'i' }; // Case-insensitive regex search
+  }
+  if (notEmail) {
+    query.sellerEmail = { $ne: notEmail }; // Exclude products from this email
+    query.status = 1; // Ensure only products with status 1 are retrieved
+  }
+  if (email) {
+    query.sellerEmail = email; // Ensure only products with status 1 are retrieved
   }
   try {
     const products = await db.collection('products').find(query).toArray();
