@@ -29,19 +29,19 @@ async function run() {
     try {
         await client.connect();
         app.locals.db = client.db("techhub");
+
+        app.get('/', (req,res) => {
+            res.send('Runningg latest.' + process.env.DB_USER + '11111111111')
+        })
+
+        app.use('/users', userRoutes);
+        app.use('/auth', authRoutes);
+        app.use('/products', productRoutes);
+
+        app.listen(5000, () => {
+            console.log(`Server is running on port 5000`);
+        });
     } finally {
     }
 }
 run().catch(console.dir);
-
-app.get('/', (req,res) => {
-    res.send('Runningg latest.' + process.env.DB_USER + '11111111111')
-})
-
-app.use('/users', userRoutes);
-app.use('/auth', authRoutes);
-app.use('/products', productRoutes);
-
-app.listen(5000, () => {
-    console.log(`Server is running on port 5000`);
-});
