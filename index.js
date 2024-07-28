@@ -6,6 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const productFeedbackRoutes = require('./routes/productFeedbackRoutes');
 
 const app = express();
 
@@ -37,6 +38,7 @@ async function run() {
         app.use('/users', userRoutes);
         app.use('/auth', authRoutes);
         app.use('/products', productRoutes);
+        app.use('/product-feedback', productFeedbackRoutes);
 
         app.listen(5000, () => {
             console.log(`Server is running on port 5000`);
